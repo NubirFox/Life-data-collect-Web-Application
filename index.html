@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galaxy Data Collector</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Galaxy gradient background */
+            background: linear-gradient(135deg, #CCEDE4, #A6D2E1, #A8A6DB, #D3BAE9, #F3D0F5, #FFE7F7);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            color: #333; /* Default text color */
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+            border-radius: 1.5rem; /* More rounded corners */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .btn {
+            background-color: #A8A6DB; /* A nice purple from the theme */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .btn:hover {
+            background-color: #8B89C2; /* Darker shade on hover */
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+        .btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .back_btn {
+            background-color: #b4b3bf; 
+            color: white;
+            padding: 0.75rem 0.75rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .back_btn:hover {
+            background-color: #6c6b7c; /* Darker shade on hover */
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+        .back_btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .input-field, .select-field, .textarea-field {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #D1D5DB;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            box-sizing: border-box;
+            background-color: #F9FAFB;
+        }
+        .input-field:focus, .select-field:focus, .textarea-field:focus {
+            outline: none;
+            border-color: #A8A6DB;
+            box-shadow: 0 0 0 3px rgba(168, 166, 219, 0.3);
+        }
+        .slider-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        .slider-emoji {
+            font-size: 3rem;
+            transition: transform 0.2s ease-in-out;
+        }
+        .range-slider {
+            width: 100%;
+            -webkit-appearance: none;
+            height: 8px;
+            background: linear-gradient(to right, #A6D2E1, #A8A6DB, #D3BAE9);
+            border-radius: 5px;
+            outline: none;
+            opacity: 0.9;
+            transition: opacity .2s;
+        }
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #A8A6DB;
+            cursor: grab;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: background 0.2s ease-in-out;
+        }
+        .range-slider::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #A8A6DB;
+            cursor: grab;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: background 0.2s ease-in-out;
+        }
+        .range-slider::-webkit-slider-thumb:active,
+        .range-slider::-moz-range-thumb:active {
+            cursor: grabbing;
+            background: #8B89C2;
+        }
+
+        /* For the "Gift" balloons - simplified visual representation */
+        .gift-balloon-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-top: 1rem;
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px dashed #A8A6DB;
+            padding: 0.5rem;
+            border-radius: 0.75rem;
+            background-color: #F9FAFB;
+        }
+        .gift-balloon {
+            background-color: #D3BAE9;
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 1rem;
+            font-size: 0.8rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            margin: 0.2rem;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+            .btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+            .input-field, .select-field, .textarea-field {
+                padding: 0.6rem;
+                font-size: 0.9rem;
+            }
+            .slider-emoji {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="container">
+        <!-- Login Page -->
+        <div id="login-page" class="page fade-in">
+            <h1 class="text-3xl font-bold mb-6 text-gray-800">Welcome, MyDear!</h1>
+            <div class="mb-4">
+                <label for="user-select" class="block text-lg font-medium text-gray-700 mb-2">Who are you?</label>
+                <select id="user-select" class="select-field">
+                    <option value="Person 0">Person 0</option>
+                    <option value="Person 1">Person 1</option>
+                    <option value="Other">Other person</option>
+                </select>
+            </div>
+            <div id="other-person-input-container" class="mb-6 hidden">
+                <label for="other-person-name" class="block text-lg font-medium text-gray-700 mb-2">Please enter your name:</label>
+                <input type="text" id="other-person-name" class="input-field" placeholder="Your name">
+            </div>
+            <button id="enter-app-btn" class="btn">
+                Enter <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10.293 15.707a1 1 0 010-1.414L14.586 10l-4.293-4.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                    <path fill-rule="evenodd" d="M4.293 15.707a1 1 0 010-1.414L8.586 10l-4.293-4.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                </svg>
+            </button>
+        </div>
+
+        <!-- Main Menu Page -->
+        <div id="main-menu-page" class="page hidden">
+            <h1 class="text-4xl font-extrabold text-gray-900 mb-2 ">Web App</Applet></h1>
+            <p id="datetime-display" class="text-lg text-gray-600 mb-2"></p>
+            <p class="text-2xl font-semibold text-gray-700 mb-8">What you want to collect?</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <button class="btn" data-form="stressed">
+                    Stressed? <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 12a5 5 0 110-10 5 5 0 010 10z" clip-rule="evenodd" />
+                        <path d="M10 8a2 2 0 11-4 0 2 2 0 014 0zM14 8a2 2 0 11-4 0 2 2 0 014 0zM8 12.5a2.5 2.5 0 00-2.5 2.5h5A2.5 2.5 0 008 12.5z" />
+                    </svg>
+                </button>
+                <button class="btn" data-form="clock">
+                    Clk in & out <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l3 3a1 1 0 001.414-1.414L11 9.586V6z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+                <button class="btn" data-form="gift">
+                    Gift <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5.5 10.5A.5.5 0 016 10h8a.5.5 0 01.5.5v2a.5.5 0 01-.5.5H6a.5.5 0 01-.5-.5v-2zM10 3a1 1 0 011 1v1h2a1 1 0 011 1v1h-8V6a1 1 0 011-1h2V4a1 1 0 011-1zm-1 9a1 1 0 00-1 1v2a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 00-1-1h-2z" clip-rule="evenodd" />
+                        <path fill-rule="evenodd" d="M15.5 7.5a.5.5 0 01.5.5v2a.5.5 0 01-.5.5H4.5a.5.5 0 01-.5-.5v-2a.5.5 0 01.5-.5h11zM10 1a1 1 0 00-1 1v1h2V2a1 1 0 00-1-1z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+                <button class="btn" data-form="exercised">
+                    Exercised <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M12.5 10.5A.5.5 0 0113 10h-6a.5.5 0 010-1h6a.5.5 0 010 1zm-1 2A.5.5 0 0112 12h-4a.5.5 0 010-1h4a.5.5 0 010 1zm-1 2A.5.5 0 0111 14h-2a.5.5 0 010-1h2a.5.5 0 010 1zM10 18a8 8 0 100-16 8 8 0 000 16zm0 2a10 10 0 100-20 10 10 0 000 20z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+                <button class="btn" data-form="traveled">
+                    Traveled <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM5.4 9.6a.75.75 0 011.06 0L10 13.14l3.54-3.54a.75.75 0 011.06 1.06l-4 4a.75.75 0 01-1.06 0l-4-4a.75.75 0 010-1.06z" clip-rule="evenodd" />
+                        <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75V10a.75.75 0 01-1.5 0V2.75A.75.75 0 0110 2z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+                <button class="btn" data-form="income">
+                    Income statement <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm0 2h12v8H4V6zm2 2a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+            <!-- New Back Button for Main Menu -->
+            <button id="back-to-login-btn" class="back_btn">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M15.707 15.707a1 1 0 01-1.414 0L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+                </svg> Back to Login
+            </button>
+        </div>
+
+        <!-- Stressed? Form -->
+        <div id="stressed-form" class="page hidden">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">How stressed you were have?</h2>
+            <div class="slider-container mb-6">
+                <span id="stressed-emoji" class="slider-emoji">😊</span>
+                <input type="range" id="stressed-value" min="0" max="100" value="50" class="range-slider">
+                <p class="text-lg text-gray-700">Stress Level: <span id="stressed-display-value">50</span></p>
+            </div>
+            <div class="mb-6">
+                <label for="stressed-description" class="block text-lg font-medium text-gray-700 mb-2">Describe your stress:</label>
+                <textarea id="stressed-description" class="textarea-field" rows="3" placeholder="e.g., Too much work, feeling overwhelmed..."></textarea>
+            </div>
+            <div class="flex justify-between gap-4">
+                <button class="btn back-btn flex-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M15.707 15.707a1 1 0 01-1.414 0L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+                    </svg> Back
+                </button>
+                <button id="send-stressed-btn" class="btn flex-1">
+                    Send <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l4.453-1.483 2.059 2.059a1 1 0 001.414 0l4-4a1 1 0 000-1.414l-2.059-2.059 1.483-4.453a1 1 0 00-1.409-1.169l-14 7z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Clock In & Out Form -->
+        <div id="clock-form" class="page hidden">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">Are you Clock in or Clock out?</h2>
+            <div class="flex justify-center gap-4 mb-6">
+                <button id="clock-in-btn" class="btn flex-1">Clock In</button>
+                <button id="clock-out-btn" class="btn flex-1">Clock Out</button>
+            </div>
+            <p class="text-lg text-gray-700 mb-2">How are you feeling?</p>
+            <div class="slider-container mb-6">
+                <span id="clock-feeling-emoji" class="slider-emoji">😊</span>
+                <input type="range" id="clock-feeling-value" min="0" max="100" value="50" class="range-slider">
+                <p class="text-lg text-gray-700">Feeling Level: <span id="clock-feeling-display-value">50</span></p>
+            </div>
+            <div class="flex justify-between gap-4">
+                <button class="btn back-btn flex-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M15.707 15.707a1 1 0 01-1.414 0L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+                    </svg> Back
+                </button>
+                <button id="send-clock-btn" class="btn flex-1">
+                    Send <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l4.453-1.483 2.059 2.059a1 1 0 001.414 0l4-4a1 1 0 000-1.414l-2.059-2.059 1.483-4.453a1 1 0 00-1.409-1.169l-14 7z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Gift Form -->
+        <div id="gift-form" class="page hidden">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">What gift do you want?</h2>
+            <div class="mb-6">
+                <label for="gift-item" class="block text-lg font-medium text-gray-700 mb-2">Gift Idea:</label>
+                <input type="text" id="gift-item" class="input-field" placeholder="e.g., A new book, a trip to the beach">
+            </div>
+            <div class="mb-6">
+                <p class="text-lg font-medium text-gray-700 mb-2">Past Gift Ideas:</p>
+                <div id="gift-history" class="gift-balloon-container">
+                    <!-- Old gift data will be loaded here -->
+                </div>
+            </div>
+            <div class="flex justify-between gap-4">
+                <button class="btn back-btn flex-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M15.707 15.707a1 1 0 01-1.414 0L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+                    </svg> Back
+                </button>
+                <button id="send-gift-btn" class="btn flex-1">
+                    Send <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l4.453-1.483 2.059 2.059a1 1 0 001.414 0l4-4a1 1 0 000-1.414l-2.059-2.059 1.483-4.453a1 1 0 00-1.409-1.169l-14 7z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Exercised Form -->
+        <div id="exercised-form" class="page hidden">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">Exercise Statistics</h2>
+            <div class="mb-4">
+                <label for="exercise-name" class="block text-lg font-medium text-gray-700 mb-2">Exercise Name:</label>
+                <input type="text" id="exercise-name" class="input-field" placeholder="e.g., Bench Press">
+            </div>
+            <div class="grid grid-cols-2 gap-4 mb-6">
+                <div>
+                    <label for="exercise-reps" class="block text-lg font-medium text-gray-700 mb-2">Reps:</label>
+                    <input type="number" id="exercise-reps" class="input-field" placeholder="e.g., 20">
+                </div>
+                <div>
+                    <label for="exercise-sets" class="block text-lg font-medium text-gray-700 mb-2">Sets:</label>
+                    <input type="number" id="exercise-sets" class="input-field" placeholder="e.g., 4">
+                </div>
+            </div>
+            <div class="mb-6">
+                <p class="text-lg font-medium text-gray-700 mb-2">Past Workouts:</p>
+                <div id="exercise-history" class="gift-balloon-container">
+                    <!-- Old exercise data will be loaded here -->
+                </div>
+            </div>
+            <div class="flex justify-between gap-4">
+                <button class="btn back-btn flex-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M15.707 15.707a1 1 0 01-1.414 0L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+                    </svg> Back
+                </button>
+                <button id="send-exercised-btn" class="btn flex-1">
+                    Send <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l4.453-1.483 2.059 2.059a1 1 0 001.414 0l4-4a1 1 0 000-1.414l-2.059-2.059 1.483-4.453a1 1 0 00-1.409-1.169l-14 7z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Traveled Form -->
+        <div id="traveled-form" class="page hidden">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">Travel List</h2>
+            <div class="mb-4">
+                <label for="travel-place-name" class="block text-lg font-medium text-gray-700 mb-2">Place Name:</label>
+                <input type="text" id="travel-place-name" class="input-field" placeholder="e.g., Paris, Japan">
+            </div>
+            <div class="mb-4">
+                <label for="travel-description" class="block text-lg font-medium text-gray-700 mb-2">Why do you want to go?</label>
+                <textarea id="travel-description" class="textarea-field" rows="3" placeholder="e.g., To see the Eiffel Tower, experience the culture..."></textarea>
+            </div>
+            <div class="mb-6">
+                <label for="travel-duration" class="block text-lg font-medium text-gray-700 mb-2">How long to travel (days)?</label>
+                <input type="number" id="travel-duration" class="input-field" placeholder="e.g., 7">
+            </div>
+            <div class="flex justify-between gap-4">
+                <button class="btn back-btn flex-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M15.707 15.707a1 1 0 01-1.414 0L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+                    </svg> Back
+                </button>
+                <button id="send-traveled-btn" class="btn flex-1">
+                    Send <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l4.453-1.483 2.059 2.059a1 1 0 001.414 0l4-4a1 1 0 000-1.414l-2.059-2.059 1.483-4.453a1 1 0 00-1.409-1.169l-14 7z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Income Statement Form -->
+        <div id="income-form" class="page hidden">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">Income Statement</h2>
+            <div class="mb-4">
+                <label for="income-item-name" class="block text-lg font-medium text-gray-700 mb-2">Item Name:</label>
+                <input type="text" id="income-item-name" class="input-field" placeholder="e.g., Salary, Coffee">
+            </div>
+            <div class="mb-4">
+                <label for="income-type" class="block text-lg font-medium text-gray-700 mb-2">Type:</label>
+                <select id="income-type" class="select-field">
+                    <option value="Income">Income</option>
+                    <option value="Expense">Expense</option>
+                </select>
+            </div>
+            <div class="mb-6">
+                <label for="income-price" class="block text-lg font-medium text-gray-700 mb-2">Price:</label>
+                <input type="number" id="income-price" class="input-field" placeholder="e.g., 1000.00">
+            </div>
+            <div class="flex justify-between gap-4">
+                <button class="btn back-btn flex-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M15.707 15.707a1 1 0 01-1.414 0L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+                    </svg> Back
+                </button>
+                <button id="send-income-btn" class="btn flex-1">
+                    Send <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l4.453-1.483 2.059 2.059a1 1 0 001.414 0l4-4a1 1 0 000-1.414l-2.059-2.059 1.483-4.453a1 1 0 00-1.409-1.169l-14 7z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Message Box for alerts -->
+        <div id="message-box" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden">
+            <div class="bg-white p-6 rounded-xl shadow-lg text-center max-w-sm w-full">
+                <p id="message-text" class="text-lg font-semibold mb-4 text-gray-800"></p>
+                <button id="message-ok-btn" class="btn w-full">OK</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Global variables to manage current user and page
+        let currentUser = '';
+        let currentPage = 'login-page';
+
+        // Get DOM elements
+        const appContainer = document.getElementById('app');
+        const loginPage = document.getElementById('login-page');
+        const mainMenuPage = document.getElementById('main-menu-page');
+        const stressedForm = document.getElementById('stressed-form');
+        const clockForm = document.getElementById('clock-form');
+        const giftForm = document.getElementById('gift-form');
+        const exercisedForm = document.getElementById('exercised-form');
+        const traveledForm = document.getElementById('traveled-form');
+        const incomeForm = document.getElementById('income-form');
+
+        const userSelect = document.getElementById('user-select');
+        const otherPersonInputContainer = document.getElementById('other-person-input-container');
+        const otherPersonNameInput = document.getElementById('other-person-name');
+        const enterAppBtn = document.getElementById('enter-app-btn');
+        const datetimeDisplay = document.getElementById('datetime-display');
+
+        const stressedValueInput = document.getElementById('stressed-value');
+        const stressedEmojiDisplay = document.getElementById('stressed-emoji');
+        const stressedDisplayValue = document.getElementById('stressed-display-value');
+        const stressedDescriptionInput = document.getElementById('stressed-description');
+        const sendStressedBtn = document.getElementById('send-stressed-btn');
+
+        const clockInBtn = document.getElementById('clock-in-btn');
+        const clockOutBtn = document.getElementById('clock-out-btn');
+        const clockFeelingValueInput = document.getElementById('clock-feeling-value');
+        const clockFeelingEmojiDisplay = document.getElementById('clock-feeling-emoji');
+        const clockFeelingDisplayValue = document.getElementById('clock-feeling-display-value');
+        const sendClockBtn = document.getElementById('send-clock-btn');
+
+        const giftItemInput = document.getElementById('gift-item');
+        const giftHistoryContainer = document.getElementById('gift-history');
+        const sendGiftBtn = document.getElementById('send-gift-btn');
+
+        const exerciseNameInput = document.getElementById('exercise-name');
+        const exerciseRepsInput = document.getElementById('exercise-reps');
+        const exerciseSetsInput = document.getElementById('exercise-sets');
+        const exerciseHistoryContainer = document.getElementById('exercise-history');
+        const sendExercisedBtn = document.getElementById('send-exercised-btn');
+
+        const travelPlaceNameInput = document.getElementById('travel-place-name');
+        const travelDescriptionInput = document.getElementById('travel-description');
+        const travelDurationInput = document.getElementById('travel-duration');
+        const sendTraveledBtn = document.getElementById('send-traveled-btn');
+
+        const incomeItemNameInput = document.getElementById('income-item-name');
+        const incomeTypeSelect = document.getElementById('income-type');
+        const incomePriceInput = document.getElementById('income-price');
+        const sendIncomeBtn = document.getElementById('send-income-btn');
+
+        const messageBox = document.getElementById('message-box');
+        const messageText = document.getElementById('message-text');
+        const messageOkBtn = document.getElementById('message-ok-btn');
+
+        // New Back to Login button
+        const backToLoginBtn = document.getElementById('back-to-login-btn');
+
+
+        // --- Utility Functions ---
+
+        /**
+         * Displays a custom message box instead of alert().
+         * @param {string} message - The message to display.
+         */
+        function showMessageBox(message) {
+            messageText.textContent = message;
+            messageBox.classList.remove('hidden');
+        }
+
+        /**
+         * Hides the custom message box.
+         */
+        function hideMessageBox() {
+            messageBox.classList.add('hidden');
+        }
+
+        /**
+         * Updates the current date and time display.
+         */
+        function updateDateTime() {
+            const now = new Date();
+            const options = {
+                weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+                hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true
+            };
+            datetimeDisplay.textContent = now.toLocaleDateString('en-US', options);
+        }
+
+        /**
+         * Shows a specific page and hides others.
+         * Adds a fade-in animation.
+         * @param {HTMLElement} pageToShow - The page element to display.
+         */
+        function showPage(pageToShow) {
+            const allPages = document.querySelectorAll('.page');
+            allPages.forEach(page => {
+                page.classList.add('hidden');
+                page.classList.remove('fade-in'); // Remove animation class before hiding
+            });
+            pageToShow.classList.remove('hidden');
+            // Trigger reflow to restart animation
+            void pageToShow.offsetWidth;
+            pageToShow.classList.add('fade-in');
+            currentPage = pageToShow.id; // Update current page ID
+        }
+
+        /**
+         * Gets the appropriate emoji based on a 0-100 value.
+         * @param {number} value - The input value (0-100).
+         * @returns {string} The emoji character.
+         */
+        function getEmojiForValue(value) {
+            if (value <= 20) return '😊'; // Happy
+            if (value <= 40) return '🙂'; // Slightly Happy
+            if (value <= 60) return '😐'; // Neutral
+            if (value <= 80) return '😟'; // Worried
+            return '😩'; // Very Stressed
+        }
+
+        /**
+         * Populates the history container with items from localStorage.
+         * @param {string} key - The localStorage key for the data.
+         * @param {HTMLElement} container - The DOM element to populate.
+         */
+        function populateHistory(key, container) {
+            container.innerHTML = ''; // Clear previous content
+            const history = JSON.parse(localStorage.getItem(key) || '[]');
+            if (history.length === 0) {
+                container.textContent = 'No past data yet!';
+                container.classList.add('text-gray-500', 'italic');
+            } else {
+                container.classList.remove('text-gray-500', 'italic');
+                history.forEach(item => {
+                    const span = document.createElement('span');
+                    span.className = 'gift-balloon';
+                    span.textContent = item;
+                    container.appendChild(span);
+                });
+            }
+        }
+
+        /**
+         * Adds a new item to localStorage history.
+         * @param {string} key - The localStorage key.
+         * @param {string} item - The item to add.
+         */
+        function addHistoryItem(key, item) {
+            const history = JSON.parse(localStorage.getItem(key) || '[]');
+            history.unshift(item); // Add to the beginning
+            if (history.length > 10) { // Keep history to a reasonable size
+                history.pop();
+            }
+            localStorage.setItem(key, JSON.stringify(history));
+        }
+
+        // --- Event Listeners ---
+
+        // Login Page Logic
+        userSelect.addEventListener('change', () => {
+            if (userSelect.value === 'Other') {
+                otherPersonInputContainer.classList.remove('hidden');
+                otherPersonNameInput.focus();
+            } else {
+                otherPersonInputContainer.classList.add('hidden');
+            }
+        });
+
+        enterAppBtn.addEventListener('click', () => {
+            let selectedUser = userSelect.value;
+            if (selectedUser === 'Other') {
+                const otherName = otherPersonNameInput.value.trim();
+                if (otherName) {
+                    currentUser = otherName;
+                    showPage(mainMenuPage);
+                    updateDateTime(); // Start updating time on main menu
+                } else {
+                    showMessageBox('Please enter your name if you select "Other person".');
+                }
+            } else {
+                currentUser = selectedUser;
+                showPage(mainMenuPage);
+                updateDateTime(); // Start updating time on main menu
+            }
+        });
+
+        // Main Menu Button Logic
+        document.querySelectorAll('.btn[data-form]').forEach(button => {
+            button.addEventListener('click', (event) => {
+                const formType = event.currentTarget.dataset.form;
+                switch (formType) {
+                    case 'stressed':
+                        showPage(stressedForm);
+                        // Reset slider and description when entering form
+                        stressedValueInput.value = 50;
+                        stressedEmojiDisplay.textContent = getEmojiForValue(50);
+                        stressedDisplayValue.textContent = 50;
+                        stressedDescriptionInput.value = '';
+                        break;
+                    case 'clock':
+                        showPage(clockForm);
+                        // Reset slider when entering form
+                        clockFeelingValueInput.value = 50;
+                        clockFeelingEmojiDisplay.textContent = getEmojiForValue(50);
+                        clockFeelingDisplayValue.textContent = 50;
+                        break;
+                    case 'gift':
+                        showPage(giftForm);
+                        giftItemInput.value = ''; // Clear input
+                        populateHistory('giftHistory', giftHistoryContainer);
+                        break;
+                    case 'exercised':
+                        showPage(exercisedForm);
+                        exerciseNameInput.value = '';
+                        exerciseRepsInput.value = '';
+                        exerciseSetsInput.value = '';
+                        populateHistory('exerciseHistory', exerciseHistoryContainer);
+                        break;
+                    case 'traveled':
+                        showPage(traveledForm);
+                        travelPlaceNameInput.value = '';
+                        travelDescriptionInput.value = '';
+                        travelDurationInput.value = '';
+                        break;
+                    case 'income':
+                        showPage(incomeForm);
+                        incomeItemNameInput.value = '';
+                        incomeTypeSelect.value = 'Income';
+                        incomePriceInput.value = '';
+                        break;
+                }
+            });
+        });
+
+        // Back Buttons Logic (for forms)
+        document.querySelectorAll('.back-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                showPage(mainMenuPage);
+            });
+        });
+
+        // New: Back to Login button on Main Menu
+        backToLoginBtn.addEventListener('click', () => {
+            showPage(loginPage);
+            // Optionally clear login fields if desired
+            userSelect.value = 'FILM';
+            otherPersonNameInput.value = '';
+            otherPersonInputContainer.classList.add('hidden');
+        });
+
+        // Stressed Form Logic
+        stressedValueInput.addEventListener('input', () => {
+            const value = parseInt(stressedValueInput.value);
+            stressedEmojiDisplay.textContent = getEmojiForValue(value);
+            stressedDisplayValue.textContent = value;
+        });
+
+        sendStressedBtn.addEventListener('click', () => {
+            const stressValue = stressedValueInput.value;
+            const stressDescription = stressedDescriptionInput.value.trim();
+            const timestamp = new Date().toISOString();
+
+            if (!stressDescription) {
+                showMessageBox('Please describe your stress.');
+                return;
+            }
+
+            const data = {
+                user: currentUser,
+                timestamp: timestamp,
+                stressLevel: stressValue,
+                description: stressDescription
+            };
+
+            // --- Google Apps Script Integration Placeholder ---
+            // This is where you would call your Google Apps Script function.
+            // Example: google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onError).saveStressedData(data);
+            // For now, we'll just simulate success and show a message.
+            showMessageBox(`Stress data sent for ${currentUser}!\nLevel: ${stressValue}, Desc: "${stressDescription}"`);
+            console.log("Stressed Data to send:", data);
+            stressedDescriptionInput.value = ''; // Clear input after sending
+            showPage(mainMenuPage); // Go back to main menu
+        });
+
+        // Clock In & Out Form Logic
+        let clockAction = ''; // To store 'Clock In' or 'Clock Out'
+
+        clockInBtn.addEventListener('click', () => {
+            clockAction = 'Clock In';
+            clockInBtn.classList.add('bg-green-500'); // Highlight selected button
+            clockInBtn.classList.remove('bg-A8A6DB');
+            clockOutBtn.classList.remove('bg-red-500');
+            clockOutBtn.classList.add('bg-A8A6DB');
+        });
+
+        clockOutBtn.addEventListener('click', () => {
+            clockAction = 'Clock Out';
+            clockOutBtn.classList.add('bg-red-500'); // Highlight selected button
+            clockOutBtn.classList.remove('bg-A8A6DB');
+            clockInBtn.classList.remove('bg-green-500');
+            clockInBtn.classList.add('bg-A8A6DB');
+        });
+
+        clockFeelingValueInput.addEventListener('input', () => {
+            const value = parseInt(clockFeelingValueInput.value);
+            clockFeelingEmojiDisplay.textContent = getEmojiForValue(value);
+            clockFeelingDisplayValue.textContent = value;
+        });
+
+        sendClockBtn.addEventListener('click', () => {
+            if (!clockAction) {
+                showMessageBox('Please select either "Clock In" or "Clock Out".');
+                return;
+            }
+            const feelingValue = clockFeelingValueInput.value;
+            const timestamp = new Date().toISOString();
+
+            const data = {
+                user: currentUser,
+                timestamp: timestamp,
+                action: clockAction,
+                feelingLevel: feelingValue
+            };
+
+            // --- Google Apps Script Integration Placeholder ---
+            // Example: google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onError).saveClockData(data);
+            showMessageBox(`Clock data sent for ${currentUser}!\nAction: ${clockAction}, Feeling: ${feelingValue}`);
+            console.log("Clock Data to send:", data);
+            clockAction = ''; // Reset action
+            clockInBtn.classList.remove('bg-green-500'); // Reset button styles
+            clockInBtn.classList.add('bg-A8A6DB');
+            clockOutBtn.classList.remove('bg-red-500');
+            clockOutBtn.classList.add('bg-A8A6DB');
+            showPage(mainMenuPage);
+        });
+
+        // Gift Form Logic
+        sendGiftBtn.addEventListener('click', () => {
+            const giftItem = giftItemInput.value.trim();
+            const timestamp = new Date().toISOString();
+
+            if (!giftItem) {
+                showMessageBox('Please enter a gift idea.');
+                return;
+            }
+
+            const data = {
+                user: currentUser,
+                timestamp: timestamp,
+                gift: giftItem
+            };
+
+            // Add to client-side history for immediate display
+            addHistoryItem('giftHistory', giftItem);
+            populateHistory('giftHistory', giftHistoryContainer); // Re-render history
+
+            // --- Google Apps Script Integration Placeholder ---
+            // Example: google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onError).saveGiftData(data);
+            showMessageBox(`Gift idea sent for ${currentUser}!\nItem: "${giftItem}"`);
+            console.log("Gift Data to send:", data);
+            giftItemInput.value = ''; // Clear input
+            showPage(mainMenuPage);
+        });
+
+        // Exercised Form Logic
+        sendExercisedBtn.addEventListener('click', () => {
+            const exerciseName = exerciseNameInput.value.trim();
+            const reps = exerciseRepsInput.value.trim();
+            const sets = exerciseSetsInput.value.trim();
+            const timestamp = new Date().toISOString();
+
+            if (!exerciseName || !reps || !sets) {
+                showMessageBox('Please fill in all exercise details.');
+                return;
+            }
+
+            const data = {
+                user: currentUser,
+                timestamp: timestamp,
+                exerciseName: exerciseName,
+                reps: reps,
+                sets: sets
+            };
+
+            // Add to client-side history for immediate display
+            addHistoryItem('exerciseHistory', `${exerciseName}: ${reps} reps, ${sets} sets`);
+            populateHistory('exerciseHistory', exerciseHistoryContainer); // Re-render history
+
+            // --- Google Apps Script Integration Placeholder ---
+            // Example: google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onError).saveExercisedData(data);
+            showMessageBox(`Exercise data sent for ${currentUser}!\n${exerciseName}: ${reps} reps, ${sets} sets`);
+            console.log("Exercised Data to send:", data);
+            exerciseNameInput.value = '';
+            exerciseRepsInput.value = '';
+            exerciseSetsInput.value = '';
+            showPage(mainMenuPage);
+        });
+
+        // Traveled Form Logic
+        sendTraveledBtn.addEventListener('click', () => {
+            const placeName = travelPlaceNameInput.value.trim();
+            const description = travelDescriptionInput.value.trim();
+            const duration = travelDurationInput.value.trim();
+            const timestamp = new Date().toISOString();
+
+            if (!placeName || !description || !duration) {
+                showMessageBox('Please fill in all travel details.');
+                return;
+            }
+
+            const data = {
+                user: currentUser,
+                timestamp: timestamp,
+                placeName: placeName,
+                description: description,
+                durationDays: duration
+            };
+
+            // --- Google Apps Script Integration Placeholder ---
+            // Example: google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onError).saveTraveledData(data);
+            showMessageBox(`Travel data sent for ${currentUser}!\nPlace: ${placeName}, Duration: ${duration} days`);
+            console.log("Traveled Data to send:", data);
+            travelPlaceNameInput.value = '';
+            travelDescriptionInput.value = '';
+            travelDurationInput.value = '';
+            showPage(mainMenuPage);
+        });
+
+        // Income Statement Form Logic
+        sendIncomeBtn.addEventListener('click', () => {
+            const itemName = incomeItemNameInput.value.trim();
+            const type = incomeTypeSelect.value;
+            const price = incomePriceInput.value.trim();
+            const timestamp = new Date().toISOString();
+
+            if (!itemName || !price) {
+                showMessageBox('Please fill in item name and price.');
+                return;
+            }
+            if (isNaN(parseFloat(price))) {
+                showMessageBox('Price must be a valid number.');
+                return;
+            }
+
+            const data = {
+                user: currentUser,
+                timestamp: timestamp,
+                itemName: itemName,
+                type: type,
+                price: parseFloat(price)
+            };
+
+            // --- Google Apps Script Integration Placeholder ---
+            // Example: google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onError).saveIncomeData(data);
+            showMessageBox(`Income data sent for ${currentUser}!\nItem: ${itemName}, Type: ${type}, Price: ${price}`);
+            console.log("Income Data to send:", data);
+            incomeItemNameInput.value = '';
+            incomePriceInput.value = '';
+            showPage(mainMenuPage);
+        });
+
+        // Handle OK button on message box
+        messageOkBtn.addEventListener('click', hideMessageBox);
+
+        // Initial setup
+        window.onload = () => {
+            showPage(loginPage);
+            // Update time every second on main menu page
+            setInterval(() => {
+                if (currentPage === 'main-menu-page') {
+                    updateDateTime();
+                }
+            }, 1000);
+        };
+
+        // --- Google Apps Script Success/Error Handlers (Client-Side) ---
+        // These functions would be called by google.script.run after a server response.
+        function onSuccess(response) {
+            // You can add more specific logic here based on the response from Apps Script
+            showMessageBox('Data successfully saved!');
+            console.log('Apps Script Response:', response);
+            // Optionally, clear form or navigate back after successful save
+            // showPage(mainMenuPage);
+        }
+
+        function onError(error) {
+            showMessageBox('Error saving data: ' + error.message);
+            console.error('Apps Script Error:', error);
+        }
+
+    </script>
+</body>
+</html>
