@@ -206,8 +206,8 @@
             <div class="mb-4">
                 <label for="user-select" class="block text-lg font-medium text-gray-700 mb-2">Who are you?</label>
                 <select id="user-select" class="select-field">
-                    <option value="Person 0">Person 0</option>
-                    <option value="Person 1">Person 1</option>
+                    <option value="Person1">Person1</option>
+                    <option value="Person2">Person2</option>
                     <option value="Other">Other person</option>
                 </select>
             </div>
@@ -225,46 +225,52 @@
 
         <!-- Main Menu Page -->
         <div id="main-menu-page" class="page hidden">
-            <h1 class="text-4xl font-extrabold text-gray-900 mb-2 ">Web App</Applet></h1>
+            <h1 class="text-4xl font-extrabold text-gray-900 mb-2">US</h1>
             <p id="datetime-display" class="text-lg text-gray-600 mb-2"></p>
-            <p class="text-2xl font-semibold text-gray-700 mb-8">What you want to collect?</p>
+            <p class="text-2xl font-semibold text-gray-700 mb-8">What you want to collect? Babe.</p>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                 <button class="btn" data-form="stressed">
-                    Stressed? <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    STRESSED? <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 12a5 5 0 110-10 5 5 0 010 10z" clip-rule="evenodd" />
                         <path d="M10 8a2 2 0 11-4 0 2 2 0 014 0zM14 8a2 2 0 11-4 0 2 2 0 014 0zM8 12.5a2.5 2.5 0 00-2.5 2.5h5A2.5 2.5 0 008 12.5z" />
                     </svg>
                 </button>
                 <button class="btn" data-form="clock">
-                    Clk in & out <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    CLK IN & OUT <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l3 3a1 1 0 001.414-1.414L11 9.586V6z" clip-rule="evenodd" />
                     </svg>
                 </button>
                 <button class="btn" data-form="gift">
-                    Gift <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    GIFT <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M5.5 10.5A.5.5 0 016 10h8a.5.5 0 01.5.5v2a.5.5 0 01-.5.5H6a.5.5 0 01-.5-.5v-2zM10 3a1 1 0 011 1v1h2a1 1 0 011 1v1h-8V6a1 1 0 011-1h2V4a1 1 0 011-1zm-1 9a1 1 0 00-1 1v2a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 00-1-1h-2z" clip-rule="evenodd" />
                         <path fill-rule="evenodd" d="M15.5 7.5a.5.5 0 01.5.5v2a.5.5 0 01-.5.5H4.5a.5.5 0 01-.5-.5v-2a.5.5 0 01.5-.5h11zM10 1a1 1 0 00-1 1v1h2V2a1 1 0 00-1-1z" clip-rule="evenodd" />
                     </svg>
                 </button>
                 <button class="btn" data-form="exercised">
-                    Exercised <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    EXERCISED <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M12.5 10.5A.5.5 0 0113 10h-6a.5.5 0 010-1h6a.5.5 0 010 1zm-1 2A.5.5 0 0112 12h-4a.5.5 0 010-1h4a.5.5 0 010 1zm-1 2A.5.5 0 0111 14h-2a.5.5 0 010-1h2a.5.5 0 010 1zM10 18a8 8 0 100-16 8 8 0 000 16zm0 2a10 10 0 100-20 10 10 0 000 20z" clip-rule="evenodd" />
                     </svg>
                 </button>
                 <button class="btn" data-form="traveled">
-                    Traveled <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    TRAVELED <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM5.4 9.6a.75.75 0 011.06 0L10 13.14l3.54-3.54a.75.75 0 011.06 1.06l-4 4a.75.75 0 01-1.06 0l-4-4a.75.75 0 010-1.06z" clip-rule="evenodd" />
                         <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75V10a.75.75 0 01-1.5 0V2.75A.75.75 0 0110 2z" clip-rule="evenodd" />
                     </svg>
                 </button>
                 <button class="btn" data-form="income">
-                    Income statement <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    INCOME STATEMENT <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm0 2h12v8H4V6zm2 2a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+                <button class="btn" data-form="live-too">
+                    LIVE TOO <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
                     </svg>
                 </button>
             </div>
             <!-- New Back Button for Main Menu -->
+            <p class="mb-8"></p>
             <button id="back-to-login-btn" class="back_btn">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M15.707 15.707a1 1 0 01-1.414 0L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
@@ -420,21 +426,19 @@
 
         <!-- Income Statement Form -->
         <div id="income-form" class="page hidden">
-            <h2 class="text-2xl font-bold mb-6 text-gray-800">Income Statement</h2>
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">INCOME STATEMENT</h2>
             <div class="mb-4">
                 <label for="income-item-name" class="block text-lg font-medium text-gray-700 mb-2">Item Name:</label>
                 <input type="text" id="income-item-name" class="input-field" placeholder="e.g., Salary, Coffee">
             </div>
-            <div class="mb-4">
-                <label for="income-type" class="block text-lg font-medium text-gray-700 mb-2">Type:</label>
-                <select id="income-type" class="select-field">
-                    <option value="Income">Income</option>
-                    <option value="Expense">Expense</option>
-                </select>
-            </div>
+
             <div class="mb-6">
                 <label for="income-price" class="block text-lg font-medium text-gray-700 mb-2">Price:</label>
                 <input type="number" id="income-price" class="input-field" placeholder="e.g., 1000.00">
+            </div>
+            <div class="flex justify-center gap-4 mb-6">
+                <button id="income-btn" class="btn flex-1">Income</button>
+                <button id="expense-btn" class="btn flex-1">Expense</button>
             </div>
             <div class="flex justify-between gap-4">
                 <button class="btn back-btn flex-1">
@@ -443,6 +447,27 @@
                     </svg> Back
                 </button>
                 <button id="send-income-btn" class="btn flex-1">
+                    Send <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l4.453-1.483 2.059 2.059a1 1 0 001.414 0l4-4a1 1 0 000-1.414l-2.059-2.059 1.483-4.453a1 1 0 00-1.409-1.169l-14 7z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- LIVE TOO Form -->
+        <div id="live-too-form" class="page hidden">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">Are you live together?</h2>
+            <div class="flex justify-center gap-4 mb-6">
+                <button id="live-yes-btn" class="btn flex-1">Yes, We live</button>
+                <button id="live-no-btn" class="btn flex-1">NO, We're LDR</button>
+            </div>
+            <div class="flex justify-between gap-4">
+                <button class="btn back-btn flex-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M15.707 15.707a1 1 0 01-1.414 0L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+                    </svg> Back
+                </button>
+                <button id="send-live-too-btn" class="btn flex-1">
                     Send <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l4.453-1.483 2.059 2.059a1 1 0 001.414 0l4-4a1 1 0 000-1.414l-2.059-2.059 1.483-4.453a1 1 0 00-1.409-1.169l-14 7z" />
                     </svg>
@@ -475,6 +500,7 @@
         const exercisedForm = document.getElementById('exercised-form');
         const traveledForm = document.getElementById('traveled-form');
         const incomeForm = document.getElementById('income-form');
+        const liveTooForm = document.getElementById('live-too-form');
 
         const userSelect = document.getElementById('user-select');
         const otherPersonInputContainer = document.getElementById('other-person-input-container');
@@ -511,9 +537,15 @@
         const sendTraveledBtn = document.getElementById('send-traveled-btn');
 
         const incomeItemNameInput = document.getElementById('income-item-name');
-        const incomeTypeSelect = document.getElementById('income-type');
+        const incomeBtn = document.getElementById('income-btn');
+        const expenseBtn = document.getElementById('expense-btn');
         const incomePriceInput = document.getElementById('income-price');
         const sendIncomeBtn = document.getElementById('send-income-btn');
+
+        const liveYesBtn = document.getElementById('live-yes-btn'); // New: Live Too Yes button
+        const liveNoBtn = document.getElementById('live-no-btn');   // New: Live Too No button
+        const sendLiveTooBtn = document.getElementById('send-live-too-btn'); // New: Live Too Send button
+        let liveTogetherStatus = ''; // New: To store the selected status
 
         const messageBox = document.getElementById('message-box');
         const messageText = document.getElementById('message-text');
@@ -576,12 +608,25 @@
          * @param {number} value - The input value (0-100).
          * @returns {string} The emoji character.
          */
-        function getEmojiForValue(value) {
+        function getEmojiForValueBad(value) {
             if (value <= 20) return '😊'; // Happy
             if (value <= 40) return '🙂'; // Slightly Happy
             if (value <= 60) return '😐'; // Neutral
             if (value <= 80) return '😟'; // Worried
             return '😩'; // Very Stressed
+        }
+
+        /**
+         * Gets the appropriate emoji based on a 0-100 value.
+         * @param {number} value - The input value (0-100).
+         * @returns {string} The emoji character.
+         */
+        function getEmojiForValueGood(value) {
+            if (value <= 20) return '😩'; // Happy
+            if (value <= 40) return '😟'; // Slightly Happy
+            if (value <= 60) return '😐'; // Neutral
+            if (value <= 80) return '🙂'; // Worried
+            return '😊'; // Very Stressed
         }
 
         /**
@@ -659,7 +704,7 @@
                         showPage(stressedForm);
                         // Reset slider and description when entering form
                         stressedValueInput.value = 50;
-                        stressedEmojiDisplay.textContent = getEmojiForValue(50);
+                        stressedEmojiDisplay.textContent = getEmojiForValueBad(50);
                         stressedDisplayValue.textContent = 50;
                         stressedDescriptionInput.value = '';
                         break;
@@ -667,7 +712,7 @@
                         showPage(clockForm);
                         // Reset slider when entering form
                         clockFeelingValueInput.value = 50;
-                        clockFeelingEmojiDisplay.textContent = getEmojiForValue(50);
+                        clockFeelingEmojiDisplay.textContent = getEmojiForValueGood(50);
                         clockFeelingDisplayValue.textContent = 50;
                         break;
                     case 'gift':
@@ -691,8 +736,15 @@
                     case 'income':
                         showPage(incomeForm);
                         incomeItemNameInput.value = '';
-                        incomeTypeSelect.value = 'Income';
                         incomePriceInput.value = '';
+                        break;
+                    case 'live-too': // New: Live Too form
+                        showPage(liveTooForm);
+                        liveTogetherStatus = ''; // Reset selection
+                        liveYesBtn.classList.remove('bg-green-500'); // Reset button styles
+                        liveYesBtn.classList.add('bg-A8A6DB');
+                        liveNoBtn.classList.remove('bg-red-500');
+                        liveNoBtn.classList.add('bg-A8A6DB');
                         break;
                 }
             });
@@ -717,7 +769,7 @@
         // Stressed Form Logic
         stressedValueInput.addEventListener('input', () => {
             const value = parseInt(stressedValueInput.value);
-            stressedEmojiDisplay.textContent = getEmojiForValue(value);
+            stressedEmojiDisplay.textContent = getEmojiForValueBad(value);
             stressedDisplayValue.textContent = value;
         });
 
@@ -769,7 +821,7 @@
 
         clockFeelingValueInput.addEventListener('input', () => {
             const value = parseInt(clockFeelingValueInput.value);
-            clockFeelingEmojiDisplay.textContent = getEmojiForValue(value);
+            clockFeelingEmojiDisplay.textContent = getEmojiForValueGood(value);
             clockFeelingDisplayValue.textContent = value;
         });
 
@@ -893,9 +945,31 @@
         });
 
         // Income Statement Form Logic
+        // Clock In & Out Form Logic
+        let StatementAction = ''; // To store 'income' or 'expense'
+
+        incomeBtn.addEventListener('click', () => {
+            StatementAction = 'Income';
+            incomeBtn.classList.add('bg-green-500'); // Highlight selected button
+            incomeBtn.classList.remove('bg-A8A6DB');
+            expenseBtn.classList.remove('bg-red-500');
+            expenseBtn.classList.add('bg-A8A6DB');
+        });
+
+        expenseBtn.addEventListener('click', () => {
+            StatementAction = 'Expense';
+            expenseBtn.classList.add('bg-red-500'); // Highlight selected button
+            expenseBtn.classList.remove('bg-A8A6DB');
+            incomeBtn.classList.remove('bg-green-500');
+            incomeBtn.classList.add('bg-A8A6DB');
+        });
+
         sendIncomeBtn.addEventListener('click', () => {
+            if (!StatementAction) {
+                showMessageBox('Please select either "Income" or "Expense".');
+                return;
+            }
             const itemName = incomeItemNameInput.value.trim();
-            const type = incomeTypeSelect.value;
             const price = incomePriceInput.value.trim();
             const timestamp = new Date().toISOString();
 
@@ -912,19 +986,65 @@
                 user: currentUser,
                 timestamp: timestamp,
                 itemName: itemName,
-                type: type,
+                action: StatementAction,
                 price: parseFloat(price)
             };
 
             // --- Google Apps Script Integration Placeholder ---
             // Example: google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onError).saveIncomeData(data);
-            showMessageBox(`Income data sent for ${currentUser}!\nItem: ${itemName}, Type: ${type}, Price: ${price}`);
+            showMessageBox(`Income data sent for ${currentUser}!\nItem: ${itemName}, Type: ${StatementAction}, Price: ${price}`);
             console.log("Income Data to send:", data);
+            StatementAction = ''; // Reset action
+            incomeBtn.classList.remove('bg-green-500'); // Reset button styles
+            incomeBtn.classList.add('bg-A8A6DB');
+            expenseBtn.classList.remove('bg-red-500');
+            expenseBtn.classList.add('bg-A8A6DB');
             incomeItemNameInput.value = '';
             incomePriceInput.value = '';
             showPage(mainMenuPage);
         });
 
+        liveYesBtn.addEventListener('click', () => {
+            liveTogetherStatus = 'Yes, We live';
+            liveYesBtn.classList.add('bg-green-500'); // Highlight selected button
+            liveYesBtn.classList.remove('bg-A8A6DB');
+            liveNoBtn.classList.remove('bg-red-500');
+            liveNoBtn.classList.add('bg-A8A6DB');
+        });
+
+        liveNoBtn.addEventListener('click', () => {
+            liveTogetherStatus = 'NO, We\'re LDR';
+            liveNoBtn.classList.add('bg-red-500'); // Highlight selected button
+            liveNoBtn.classList.remove('bg-A8A6DB');
+            liveYesBtn.classList.remove('bg-green-500');
+            liveYesBtn.classList.add('bg-A8A6DB');
+        });
+
+        sendLiveTooBtn.addEventListener('click', () => {
+            if (!liveTogetherStatus) {
+                showMessageBox('Please select whether you live together or are LDR.');
+                return;
+            }
+            const timestamp = new Date().toISOString();
+
+            const data = {
+                user: currentUser,
+                timestamp: timestamp,
+                status: liveTogetherStatus
+            };
+
+            // --- Google Apps Script Integration Placeholder ---
+            // Example: google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onError).saveLiveTogetherData(data);
+            showMessageBox(`Live Together status sent for ${currentUser}!\nStatus: ${liveTogetherStatus}`);
+            console.log("Live Too Data to send:", data);
+            liveTogetherStatus = ''; // Reset selection
+            liveYesBtn.classList.remove('bg-green-500'); // Reset button styles
+            liveYesBtn.classList.add('bg-A8A6DB');
+            liveNoBtn.classList.remove('bg-red-500');
+            liveNoBtn.classList.add('bg-A8A6DB');
+            showPage(mainMenuPage);
+        });
+        
         // Handle OK button on message box
         messageOkBtn.addEventListener('click', hideMessageBox);
 
